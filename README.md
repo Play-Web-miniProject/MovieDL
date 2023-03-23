@@ -12,50 +12,50 @@
 <br> 4)
 <br>  
 <br> =================================================================
-### 2023.03.20.월 회의록
-<데이터 확인 및 전처리 과정><br>
-(DataFrame 이름을 df로 하는 것을 가정)<br>
-1. df.isnull().sum() : 결측치 확인하기<br>
-2. df.drop(['컬럼명1', '컬럼명2', ...], axis=1, inplace=True) : 불필요한 '컬럼' 삭제하기<br>
-3. df['컬럼명1'].fillna('기타', inplace=True) : null값 기타로 변경하기<br>
-4. df.drop(df.loc[df['컬럼명1'].isnull()].index, inplace=True) : null 값이 있는 '행' 삭제하기<br>
-5. 컬럼별로 unique 값 확인하기<br>
+### 2023.03.20.월 회의록   
+<데이터 확인 및 전처리 과정>   
+(DataFrame 이름을 df로 하는 것을 가정)   
+1. df.isnull().sum() : 결측치 확인하기   
+2. df.drop(['컬럼명1', '컬럼명2', ...], axis=1, inplace=True) : 불필요한 '컬럼' 삭제하기   
+3. df['컬럼명1'].fillna('기타', inplace=True) : null값 기타로 변경하기   
+4. df.drop(df.loc[df['컬럼명1'].isnull()].index, inplace=True) : null 값이 있는 '행' 삭제하기   
+5. 컬럼별로 unique 값 확인하기   
 ```
-category_cols = ['영화명','감독', '배급사', '영화유형','영화형태','국적','장르','등급','영화구분',]
-for col in category_cols:
-    print('컬럼 [{}] UNIQUE : {}'.format(col, len(df[col].unique())))
+category_cols = ['영화명','감독', '배급사', '영화유형','영화형태','국적','장르','등급','영화구분',]   
+for col in category_cols:   
+    print('컬럼 [{}] UNIQUE : {}'.format(col, len(df[col].unique())))   
 ```
-6. 감독 -> 대표 1명으로 줄이기<br>
-7. 등급 -> 4개 등급으로 줄이기<br>
+6. 감독 -> 대표 1명으로 줄이기   
+7. 등급 -> 4개 등급으로 줄이기   
 ```
-for idx, row in df.iterrows():
-    if ',' in row['등급']:
-        ratings = row['등급'].split(',')
-        # 전체, 12, 15, 청소년관람불가 순
-        if '전체' in ratings:
-            df['등급'][idx] = '전체관람가'
-        elif '12' in ratings:
-            df['등급'][idx] = '12세관람가'
-        elif '15' in ratings:
-            df['등급'][idx] = '15세관람가'
-        else:
-            df['등급'][idx] = '청소년관람불가'
-    elif df['등급'][idx] == '18세관람가' or df['등급'][idx] == '제한상영가': 
-        df['등급'][idx] = '청소년관람불가'
-    else:
-        df['등급'][idx] = df['등급'][idx].replace('이상', '')
+for idx, row in df.iterrows():   
+    if ',' in row['등급']:   
+        ratings = row['등급'].split(',')   
+        # 전체, 12, 15, 청소년관람불가 순    
+        if '전체' in ratings:   
+            df['등급'][idx] = '전체관람가'   
+        elif '12' in ratings:   
+            df['등급'][idx] = '12세관람가'   
+        elif '15' in ratings:   
+            df['등급'][idx] = '15세관람가'   
+        else:   
+            df['등급'][idx] = '청소년관람불가'   
+    elif df['등급'][idx] == '18세관람가' or df['등급'][idx] == '제한상영가':    
+        df['등급'][idx] = '청소년관람불가'   
+    else:   
+        df['등급'][idx] = df['등급'][idx].replace('이상', '')   
 ```
-8. 데이터값이 숫자여야 하는데 dtype이 object로 나오는 컬럼을 숫자값으로 변경하기<br>
+8. 데이터값이 숫자여야 하는데 dtype이 object로 나오는 컬럼을 숫자값으로 변경하기   
 ```
-# 쉼표','를 없애줘야 int로 변환이 가능
-df['전국 매출액'] = df['전국 매출액'].str.replace(pat=r',', repl=r'', regex=True)
-df['전국 매출액'] = df['전국 매출액'].astype('int64')
+# 쉼표','를 없애줘야 int로 변환이 가능   
+df['전국 매출액'] = df['전국 매출액'].str.replace(pat=r',', repl=r'', regex=True)   
+df['전국 매출액'] = df['전국 매출액'].astype('int64')   
+   
+# '전국스크린수', '전국 매출액', '전국 관객수' 하나씩 해주기   
+```
+9. 수치형 데이터 상관관계 확인   
 
-# '전국스크린수', '전국 매출액', '전국 관객수' 하나씩 해주기
-```
-9. 수치형 데이터 상관관계 확인<br>
-
-<전처리 정해야할 것><br>
+<전처리 정해야할 것>   
 * 개봉연월일 -> '연' / '월' 데이터로 컬럼 나눴으면
 * 개봉연도 2020~2022 -> '코로나여부' 컬럼을 생성해서 1, 0 체크해서 쓸 수 있으면 어떨까
 * 국적 -> 한국, 북미, 아시아, 유럽 등 그룹으로 묶어주기
@@ -130,7 +130,7 @@ df['전국 매출액'] = df['전국 매출액'].astype('int64')
 <br> 
 <br> 
 <br> 
-> ~새롭게 알게된 마크다운..어려워효..들여쓰기 하는 방법 아시는분..~
+새롭게 알게된 마크다운..어려워효..들여쓰기 하는 방법 아시는분..
 <br> 
 <br> 
 <br> 
