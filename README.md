@@ -20,12 +20,15 @@
 3. df['컬럼명1'].fillna('기타', inplace=True) : null값 기타로 변경하기<br>
 4. df.drop(df.loc[df['컬럼명1'].isnull()].index, inplace=True) : null 값이 있는 '행' 삭제하기<br>
 5. 컬럼별로 unique 값 확인하기<br>
-`category_cols = ['영화명','감독', '배급사', '영화유형','영화형태','국적','장르','등급','영화구분',]
+```
+category_cols = ['영화명','감독', '배급사', '영화유형','영화형태','국적','장르','등급','영화구분',]
 for col in category_cols:
-    print('컬럼 [{}] UNIQUE : {}'.format(col, len(df[col].unique())))`
+    print('컬럼 [{}] UNIQUE : {}'.format(col, len(df[col].unique())))
+```
 6. 감독 -> 대표 1명으로 줄이기<br>
 7. 등급 -> 4개 등급으로 줄이기<br>
-`for idx, row in df.iterrows():
+```
+for idx, row in df.iterrows():
     if ',' in row['등급']:
         ratings = row['등급'].split(',')
         # 전체, 12, 15, 청소년관람불가 순
@@ -40,13 +43,16 @@ for col in category_cols:
     elif df['등급'][idx] == '18세관람가' or df['등급'][idx] == '제한상영가': 
         df['등급'][idx] = '청소년관람불가'
     else:
-        df['등급'][idx] = df['등급'][idx].replace('이상', '')`
+        df['등급'][idx] = df['등급'][idx].replace('이상', '')
+```
 8. 데이터값이 숫자여야 하는데 dtype이 object로 나오는 컬럼을 숫자값으로 변경하기<br>
-`# 쉼표','를 없애줘야 int로 변환이 가능
+```
+# 쉼표','를 없애줘야 int로 변환이 가능
 df['전국 매출액'] = df['전국 매출액'].str.replace(pat=r',', repl=r'', regex=True)
 df['전국 매출액'] = df['전국 매출액'].astype('int64')
 
-# '전국스크린수', '전국 매출액', '전국 관객수' 하나씩 해주기`
+# '전국스크린수', '전국 매출액', '전국 관객수' 하나씩 해주기
+```
 9. 수치형 데이터 상관관계 확인<br>
 
 <전처리 정해야할 것><br>
@@ -124,7 +130,7 @@ df['전국 매출액'] = df['전국 매출액'].astype('int64')
 <br> 
 <br> 
 <br> 
-<br> > ~새롭게 알게된 마크다운..어려워효..들여쓰기 하는 방법 아시는분..~
+> ~새롭게 알게된 마크다운..어려워효..들여쓰기 하는 방법 아시는분..~
 <br> 
 <br> 
 <br> 
