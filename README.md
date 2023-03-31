@@ -14,11 +14,13 @@
 ### data 설명
 |순번|파일명|설명|
 |--|--|--|
-|1|KOBIS_개봉일람_ 2023-03-20.csv|원본 데이터 파일|
-|2|movie_resize2.csv|관객수 10000이상 데이터|
-|3|top200acd.csv|(설명 부탁)|
-|4|naver_api_utf-8.csv|4535개 수집 완료, 300개 누락, 일부 값 잘못 들어갔을 가능성 있음|
-|5|naver_api_m_utf-8.csv|누락부분만 재실행한 결과|
+|1|/data/movie_data/KOBIS_개봉일람_ 2023-03-20.csv|원본 데이터 파일|
+|2|/1_preprocessing/preprocessing.csv|누락 제외, 점수화, 라벨링 컬럼 추가|
+|3|/2_resizing/resizing.csv|스크린수 50 초과 , 전국 관객수 1000명 초과 1100만 미만|
+|4|/data/movie_data/concat.csv|네이버 평점과 배우 정보|
+|5|/2_resizing/movie_resize_merged.csv|resizing.csv 데이터에 평점&배우 정보 합친 것|
+|6|/2_resizing/movie_resize_ranking.csv|top300 데이터|
+|7|/2_resizing/movie_final.csv|전처리 완료 데이터|
 
 ### 제출 파일( 발표자료 및 코드, 데이터 포함)  
 <br>
@@ -51,6 +53,11 @@
 각 라벨의 관객수 범위는 각 라벨의 '최솟값~최댓값'   
 학습시킬 때 컬럼에 '연도'-'총 관객수'-'계절' 넣어주세여   
 <br>
+
+1. 연도 int로 바꿔서 넣고
+2. 코로나 컬럼 추가하고
+3. target 데이터를 라벨로 조정하고
+4. 분류 모델로 만들기
 
 
 ### 2023.03.27. 회의록
