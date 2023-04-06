@@ -49,3 +49,15 @@ function dp_menu(){
 
     }
 }
+
+$(function() {
+
+    $("#fadeToggleBtn").on("click", function() {
+
+        // id가 "divBox"인 요소를 1초에 걸쳐 점점 나타나게 하거나 사라지게 함.
+
+        $("#divBox").fadeToggle(1000);
+
+    });
+
+});
