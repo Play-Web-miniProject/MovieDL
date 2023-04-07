@@ -140,7 +140,7 @@
 　　‘월’ 데이터를 이용하여 ‘계절’ 컬럼 추가   
    
 ##### 　　　(6) 총 관객수 컬럼 추가 
-　　movie_total_people.csv : KOBIS 공식통계 총 관객수 및 매출액(연도별) 데이터에서 일부를 발췌   
+　　[movie_total_people.csv](final/0_data/movie_total_people.csv) : KOBIS 공식통계 총 관객수 및 매출액(연도별) 데이터에서 일부를 발췌   
 　　https://www.kobis.or.kr/kobis/business/stat/them/findYearlyTotalList.do   
    
 　　movie_total_people['관객수'] 데이터 타입을 정수형으로 변환 후,    
