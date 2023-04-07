@@ -32,8 +32,8 @@
 
 ---
 ## 목차
-1.　 [[프로젝트 소개]](#1-프로젝트-소개)   
-2.　 [[프로젝트 전 과정]](#2-프로젝트-전-과정)   
+Ⅰ.　 [[프로젝트 소개]](#1-프로젝트-소개)   
+Ⅱ.　 [[프로젝트 전 과정]](#2-프로젝트-전-과정)   
 　0. [　Data Collecting](#0-data-collecting)   
 　1. [　Data Preprocessing](#1-data-preprocessing)   
 　2. [　Data Resizing](#2-data-resizing)   
