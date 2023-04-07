@@ -31,29 +31,40 @@
 |15|requirements.txt|install이 필요한 모듈&모듈 버전 리스트|
 
 ## 1. 프로젝트 소개 
-
+   
 ### 1) 주제
 국내 개봉 영화 데이터를 활용한 영화 관람객수 예측 DL모델 개발   
-
+   
 ### 2) 배경
 (1) 영화 산업은 지속적인 성장을 거듭하며 2019년 매출액 2조 5093억 원의 최고 수준을 기록함.   
 (2) Covid-19의 확산으로 2020년 매출액 전년 대비 58% 감소하며 지난 10년 간 가장 적은 규모를 보임.   
 (3) 2022년 한국 영화산업 결산 보고서에 따르면 매출액과 전체 관객 수 모두 회복세에 접어들었음.   
 (4) 코로나19 팬데믹으로 3년간 침체된 영화산업의 성장을 기대하며 어떤 요소들이 영화 흥행에 영향을 주는지 알아보고자 함.   
-
+   
 ### 3) 목적 및 기대효과
 (1) 영화 투자자의 관점에서, 영화가 개봉되었을 때 기대되는 수익에 대해 합리적인 기준이 있다면 투자 규모 등의 중요한 의사 결정을 내릴 때 도움이 될 것.   
 (2) 머신러닝/딥러닝을 통해 영화 관람객 수 예측 모델을 도출함으로써, 영화 투자사에 가이드라인을 제시할 수 있고, 영화 제작사의 입장에서는 영화 투자 제안 및 홍보에 전략적 수단이 될 것이라 기대함.   
 (3) 소비자의 입장에서 흥행 가능성이 높은 작품을 확인함으로써 관람 전 기대감을 높이고 관람 후 만족도가 상승할 것으로 기대함.   
-
+   
 ### 4) 프로젝트 수행기간
 2023년 4월 3일 ~ 2023년 4월 7일   
-
+   
 ### 프로젝트 참여 구성인원
 안태현, 오성진, 오수연, 유정현, 이예지   
-
+   
 ### 개발환경
-시스템 : VSCode, jupyter notebook, colab   
-언어 : Python, HTML, CSS, JavaScript    
-라이브러리 : Cmake, BeautifulSoup4, Pandas, Pandas-profiling,  Numpy, Numpydoc,  Matplotlib, Seaborn, Sklearn(Scikit-Learn), Tensorflow, TensorJs, Urllib, Xmltodict
-알고리즘 : DNN(Deep Neural Network), Batch Normalization
+(1) 시스템 : VSCode, jupyter notebook, Google colaboratory   
+(2) 언어 : Python, HTML, CSS, JavaScript   
+(3) 라이브러리 : Cmake, BeautifulSoup4, Pandas, Pandas-profiling,  Numpy, Numpydoc,  Matplotlib, Seaborn, Sklearn(Scikit-Learn), Tensorflow, TensorJs, Urllib, Xmltodict   
+(4) 알고리즘 : DNN(Deep Neural Network), Batch Normalization   
+   
+## 2. 프로젝트 전 과정
+   
+### 0. Data Collecting
+KOBIS 공식 통계 자료: 연도별 영화 정보 및 통계 데이터   
+https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year   
+    
+네이버 API 영화 데이터 크롤링: 배우, 평점, 네이버 영화 정보 url 데이터 추가 수집   
+https://developers.naver.com/docs/serviceapi/search/movie/movie.md   
+
+
