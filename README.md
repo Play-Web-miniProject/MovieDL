@@ -79,10 +79,12 @@
 ### 　0. Data Collecting
 　　KOBIS 공식 통계 자료: 연도별 영화 정보 및 통계 데이터   
 　　https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year   
+
 <img src='./data/KOBIS.JPG' width=800>   
       
 　　네이버 API 영화 데이터 크롤링: 배우, 평점, 네이버 영화 정보 url 데이터 추가 수집   
 　　https://developers.naver.com/docs/serviceapi/search/movie/movie.md   
+
 <img src='./data/NAVER.JPG' width=800>   
    
 ### 　1. Data Preprocessing
@@ -116,6 +118,7 @@
 #### 　　2) 데이터 리사이징 
 ##### 　　　(1) 데이터 분포 확인    
 　　pr_report.html : 프로파일링 리포트를 확인 후 매우 편향된 데이터를 확인함    
+
 <img src='./data/PLOT1.JPG' width=400><img src='./data/PLOT2.JPG' width=386>   
    
 ##### 　　　(2) 전국 관객수를 기준으로 데이터 분리 
@@ -230,10 +233,12 @@
 　　(1) 은닉층 3개, 은닉층 각 유닛 수 90, 활성화 함수 ‘swish’, dropout 0.2 적용하여 모델 생성   
 　　(2) 옵티마이저 Adagrad, 학습률 0.9, epsilon=1e-6으로 설정     
 　　(3) 손실 함수는 ‘mae’로 하여 모델 컴파일   
+
 <img src='./data/REG.JPG' width=800>    
    
 ##### 　　　(6) 모델 학습시키기
 　　훈련 세트로 회귀 모델 학습, 검증 세트로 검증했을 때 손실 그래프 결과 확인   
+
 <img src='./data/REGPLOT.JPG' width=400>   
 
 ##### 　　　(7) 학습된 모델을 사용하여 예측 수행
@@ -262,10 +267,12 @@
 　　(1) 하이퍼파라미터 튜닝 결과: 유닛 수 256개, 레이어 수 5개, 학습률 0.006   
 　　(2) 튜닝 결과를 적용하여 모델 생성: 은닉층 4개, 유닛 수 256개-128개-64개-32개, 출력층 유닛은 클래스 수인 5로 지정하고, 활성화 함수 ‘softmax’로 지정   
 　　(3) 옵티마이저는 Adam, 학습률 0.006, 손실 함수는 ‘sparse_categorical_crossentropy’로 적용하여 컴파일   
+
 <img src='./data/CLS.JPG' width=800>    
 
 ##### 　　　(6) 모델 학습시키기
 　　훈련 세트로 분류 모델 학습, 검증 세트로 검증했을 때 정확도 그래프 결과 확인   
+
 <img src='./data/CLSPLOT.JPG' width=400>   
 
 ##### 　　　(7) 학습된 모델을 사용하여 예측 수행
@@ -289,11 +296,13 @@ https://github.com/Play-Web-miniProject/MovieDL.git
 　　model.json 변경 - 웹상에서  tensor.js를 사용하여 모델을 사용하기 위해 json 파일로 변환   
 
 #### 　　2) 레이아웃 구조
+
 <img src='./data/LAYOUT.JPG' width=800>   
 
 #### 　　3) 입력 받기
 　　범주형 데이터(배우, 감독, 배급사, 장르, 등급)를 수치형으로 변환   
 　　전국 스크린수는 스케일링 작업 진행   
+
 <img src='./data/INPUT.JPG' width=800>   
 
 #### 　　4) 결과 출력
