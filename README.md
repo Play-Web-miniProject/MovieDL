@@ -48,13 +48,15 @@
 ## 1. 프로젝트 소개 
    
 ### 　1) 주제
-국내 개봉 영화 데이터를 활용한 영화 관람객수 예측 DL모델 개발   
+　　국내 개봉 영화 데이터를 활용한 영화 관람객수 예측 DL모델 개발   
    
 ### 　2) 배경
 　　(1) 영화 산업은 지속적인 성장을 거듭하며 2019년 매출액 2조 5093억 원의 최고 수준을 기록함.   
 　　(2) Covid-19의 확산으로 2020년 매출액 전년 대비 58% 감소하며 지난 10년 간 가장 적은 규모를 보임.   
 　　(3) 2022년 한국 영화산업 결산 보고서에 따르면 매출액과 전체 관객 수 모두 회복세에 접어들었음.   
 　　(4) 코로나19 팬데믹으로 3년간 침체된 영화산업의 성장을 기대하며 어떤 요소들이 영화 흥행에 영향을 주는지 알아보고자 함.   
+  
+ 　　<img src='./data/INCOME.JPG' width=800>
    
 ### 　3) 목적 및 기대효과
 　　(1) 영화 투자자의 관점에서, 영화가 개봉되었을 때 기대되는 수익에 대해 합리적인 기준이 있다면 투자 규모 등의 중요한 의사 결정을 내릴 때 도움이 될 것.   
@@ -80,12 +82,12 @@
 　　KOBIS 공식 통계 자료: 연도별 영화 정보 및 통계 데이터   
 　　https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year   
 
-<img src='./data/KOBIS.JPG' width=800>   
+　　<img src='./data/KOBIS.JPG' width=800>   
       
 　　네이버 API 영화 데이터 크롤링: 배우, 평점, 네이버 영화 정보 url 데이터 추가 수집   
 　　https://developers.naver.com/docs/serviceapi/search/movie/movie.md   
 
-<img src='./data/NAVER.JPG' width=800>   
+　　<img src='./data/NAVER.JPG' width=800>   
    
 ### 　1. Data Preprocessing
 #### 　　1) 데이터 불러오기    
@@ -106,7 +108,7 @@
 　　'영화유형' : ‘개봉영화’ 한 가지로 컬럼 삭제   
 　　'등급' : 전체, 12세, 15세, 청소년관람불가  총 4가지 등급을 사용, 18세 관람가, 청소년제한상영가는 청소년관람불가에 포함시킴   
    
-<img src='./data/HITMAP.jpg' width=500>   
+　　<img src='./data/HITMAP.jpg' width=500>   
    
 ##### 　　　(4) 수치형 데이터 처리하기
 　　‘전국 매출액’, ‘스크린 수’, ‘관객수’ 확인을 위해 integer 타입으로 변경   
@@ -119,7 +121,7 @@
 ##### 　　　(1) 데이터 분포 확인    
 　　pr_report.html : 프로파일링 리포트를 확인 후 매우 편향된 데이터를 확인함    
 
-<img src='./data/PLOT1.JPG' width=400><img src='./data/PLOT2.JPG' width=386>   
+　　<img src='./data/PLOT1.JPG' width=400><img src='./data/PLOT2.JPG' width=386>   
    
 ##### 　　　(2) 전국 관객수를 기준으로 데이터 분리 
 　　movie_resize_ALL : 관객수 1000명 초과, 전국 스크린수 50 초과    
@@ -234,12 +236,12 @@
 　　(2) 옵티마이저 Adagrad, 학습률 0.9, epsilon=1e-6으로 설정     
 　　(3) 손실 함수는 ‘mae’로 하여 모델 컴파일   
 
-<img src='./data/REG.JPG' width=800>    
+　　<img src='./data/REG.JPG' width=800>    
    
 ##### 　　　(6) 모델 학습시키기
 　　훈련 세트로 회귀 모델 학습, 검증 세트로 검증했을 때 손실 그래프 결과 확인   
 
-<img src='./data/REGPLOT.JPG' width=400>   
+　　<img src='./data/REGPLOT.JPG' width=400>   
 
 ##### 　　　(7) 학습된 모델을 사용하여 예측 수행
 　　테스트 세트의 독립 변수를 사용하여 예측했을 때, 종속 변수(‘전국 관객수’)와 차이가 20% 이내인 예측 결과를 예측에 성공한 것으로 보고 예측 성공률 확인   
@@ -268,12 +270,12 @@
 　　(2) 튜닝 결과를 적용하여 모델 생성: 은닉층 4개, 유닛 수 256개-128개-64개-32개, 출력층 유닛은 클래스 수인 5로 지정하고, 활성화 함수 ‘softmax’로 지정   
 　　(3) 옵티마이저는 Adam, 학습률 0.006, 손실 함수는 ‘sparse_categorical_crossentropy’로 적용하여 컴파일   
 
-<img src='./data/CLS.JPG' width=800>    
+　　<img src='./data/CLS.JPG' width=800>    
 
 ##### 　　　(6) 모델 학습시키기
 　　훈련 세트로 분류 모델 학습, 검증 세트로 검증했을 때 정확도 그래프 결과 확인   
 
-<img src='./data/CLSPLOT.JPG' width=400>   
+　　<img src='./data/CLSPLOT.JPG' width=400>   
 
 ##### 　　　(7) 학습된 모델을 사용하여 예측 수행
 　　테스트 세트를 사용하여 예측했을 때, 정확도 50%    
@@ -297,13 +299,13 @@ https://github.com/Play-Web-miniProject/MovieDL.git
 
 #### 　　2) 레이아웃 구조
 
-<img src='./data/LAYOUT.JPG' width=800>   
+　　<img src='./data/LAYOUT.JPG' width=800>   
 
 #### 　　3) 입력 받기
 　　범주형 데이터(배우, 감독, 배급사, 장르, 등급)를 수치형으로 변환   
 　　전국 스크린수는 스케일링 작업 진행   
 
-<img src='./data/INPUT.JPG' width=800>   
+　　<img src='./data/INPUT.JPG' width=800>   
 
 #### 　　4) 결과 출력
 　　각각의 변수를 받아 모델이 예측한 값이 500만 명 미만일 경우 회귀 모델을 적용하여 관객수를 출력하였으며, 500만 명 이상일 경우 분류 모델을 적용하여 결과를 출력하도록 함.   
