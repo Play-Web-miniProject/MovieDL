@@ -32,17 +32,17 @@
 
 ---
 ## 목차
-[[1. 프로젝트 소개]](#1-프로젝트-소개)   
-[[2. 프로젝트 전 과정]](#2-프로젝트-전-과정)   
-[　0. Data Collecting](#0-data-collecting)   
-[　1. Data Preprocessing](#1-data-preprocessing)   
-[　2. Data Resizing](#2-data-resizing)   
-[　3. Data Merge with crawling data](#3-data-merge-with-crawling-data)   
-[　4. Modeling and Fitting](#4-modeling-and-fitting)   
-[　5. Summary (평가 및 최종결과)](#5-summary-평가-및-최종결과)   
-[　6. Conclusion(한계 및 보완점)](#6-conclusion-한계-및-보완점)   
-[　7. 참고: Git Hub](#7-참고-git-hub)   
-[　8. Web Implementation](#8-web-implementation)   
+### 1. [[프로젝트 소개]](#1-프로젝트-소개)   
+### 2. [[프로젝트 전 과정]](#2-프로젝트-전-과정)   
+### [　　0. Data Collecting](#0-data-collecting)   
+### [　　1. Data Preprocessing](#1-data-preprocessing)   
+### [　　2. Data Resizing](#2-data-resizing)   
+### [　　3. Data Merge with crawling data](#3-data-merge-with-crawling-data)   
+### [　　4. Modeling and Fitting](#4-modeling-and-fitting)   
+### [　　5. Summary (평가 및 최종결과)](#5-summary-평가-및-최종결과)   
+### [　　6. Conclusion(한계 및 보완점)](#6-conclusion-한계-및-보완점)   
+### [　　7. 참고: Git Hub](#7-참고-git-hub)   
+### [　　8. Web Implementation](#8-web-implementation)   
 
 ---
 ## 1. 프로젝트 소개 
