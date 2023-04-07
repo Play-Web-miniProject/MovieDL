@@ -63,8 +63,32 @@
 ### 0. Data Collecting
 KOBIS 공식 통계 자료: 연도별 영화 정보 및 통계 데이터   
 https://www.kobis.or.kr/kobis/business/stat/offc/searchOfficHitTotList.do?searchMode=year   
-    
+<img src='./data/KOBIS.JPG' width=800>   
+      
 네이버 API 영화 데이터 크롤링: 배우, 평점, 네이버 영화 정보 url 데이터 추가 수집   
 https://developers.naver.com/docs/serviceapi/search/movie/movie.md   
-
-
+<img src='./data/NAVER.JPG' width=800>   
+   
+### 1. Data Preprocessing
+#### 1) 데이터 불러오기    
+사용 데이터: KOBIS_개봉일람_2023-03-23.csv   
+KOBIS 개봉일람(연도별) 공식 통계 사용(2003~2023년 데이터)   
+   
+#### 2) 데이터 전처리하기 
+데이터 정보 확인하기    
+컬럼별 null값 확인하기, 데이터 타입확인하기   
+   
+#### 3) 결측치 데이터 처리하기 
+제작사, 수입사 결측치가 매우 많아 데이터 drop, 나머지 컬럼의 결측치는 기타로 변경    
+   
+#### 4) 범주형 데이터 처리하기    
+상관 관계가 높은 데이터 컬럼을 주요 변수로 선택해 사용   
+'감독' : 감독이 여러 명인 경우 첫번째 감독을 사용   
+'배급사' : 배급사가 여럿인 경우 첫번째 배급사를 사용   
+'영화유형' : ‘개봉영화’ 한 가지로 컬럼 삭제   
+'등급' : 전체, 12세, 15세, 청소년관람불가  총 4가지 등급을 사용, 18세 관람가, 청소년제한상영가는 청소년관람불가에 포함시킴   
+<img src='./data/HITMAP.jpg' width=500>   
+   
+#### 5) 수치형 데이터 처리하기
+‘전국 매출액’, ‘스크린 수’, ‘관객수’ 확인을 위해 integer 타입으로 변경   
+   
