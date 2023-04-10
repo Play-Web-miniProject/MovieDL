@@ -1,4 +1,7 @@
 
+// model1 ( 회귀 모델 )을 비동기 선언
+// model2 ( 분류 모델 )을 비동기 선언
+// 변수 초기화
 const model1 = await tf.loadLayersModel('http://127.0.0.1:5500/reg/model.json');
 const model2 = await tf.loadLayersModel('http://127.0.0.1:5500/cls/model.json');
 let inputData1;
@@ -12,20 +15,24 @@ let actors_score = 0;
 let film_score;
 let jsondata;
 
+// total_people 직접 선언
 let total_people = [{ 2018: 0.01883919 }, { 2009: -0.85400814 }, { 2022: -1.463612 }, { 2017: 0.06880218 }, { 2013: -0.02458718 }, { 2015: 0.0319241 },
 { 2010: -0.96334467 }, { 2019: 0.16616104 }, { 2012: -0.28879513 }, { 2020: -2.22617752 }, { 2016: 0.02801201 }, { 2011: -0.79209665 }, { 2021: -2.2117635 }, { 2008: -0.9680759 }, { 2014: 0 }, { 2023: -1.463612 }]
+
+// 값이 잘 들어가는지 테스트용 코드 (변수를 다시 입력해야함. 초기에 테스트한부분)
 
 // inputData = tf.tensor2d([[2, 2, 0, -1.463612, 0, 17, 1, -0.308725, 0]]);
 // outputData = model.predict(inputData);
 // output = outputData.dataSync();
 // console.log(output[0])
 
-
+// movie_top_300.json 불러오기, data 에 jsondata를 저장장
 fetch("movie_top_300.json")
     .then(response => response.json())
     .then(data => {
         jsondata = data;
     });
+// form 에서 보내준 data를 변수에 저장
 document.getElementsByTagName('form')[0].onsubmit = function () {
     let movie_name = document.getElementById('movie_name');
     let genre = document.getElementById('genre');
@@ -36,13 +43,15 @@ document.getElementsByTagName('form')[0].onsubmit = function () {
     let year = document.getElementById('year');
     let screen = document.getElementById('screen');
     let total;
-    let screen_scaled = (screen.value - 166) / (257 - 108)
+    let screen_scaled = (screen.value - 166) / (257 - 108)  // 스크린수 최소 51~817 사이값으로 받기 위한 코드 # 192번줄
     let co;
     let season;
     let year2;
 
+// 배우 점수는 0으로 초기화 ( 배우가 여러명 있을 경우 + 연산을 위해서)
     actors_score = 0;
 
+// 코로나 구별 코드 작성
     if ((2020 <= year.value.slice(0, 4)) && (year.value.slice(0, 4) <= 2022)) {
         co = 1;
     }
@@ -53,6 +62,7 @@ document.getElementsByTagName('form')[0].onsubmit = function () {
         }
     }
 
+// 감독 점수 코드
     for (let i = 0; i < 300; i++) {
         if (jsondata[i]['감독'] == director.value && jsondata[i]['개봉일'] < year.value) {
             if (i >= 271) dir_score = 1;
@@ -68,6 +78,8 @@ document.getElementsByTagName('form')[0].onsubmit = function () {
         }
         else dir_score = 0;
     }
+
+// 배우 점수 코드
     let arr2 = (actors.value).split(',');
     for (let i = 0; i < 300; i++) {
         let arr = (jsondata[i]['출연']).slice(2, -2).split("\', \'");
@@ -88,6 +100,8 @@ document.getElementsByTagName('form')[0].onsubmit = function () {
             }
         }
     }
+
+// 배급사 점수 코드
     for (let i = 0; i < 300; i++) {
         if (jsondata[i]['배급사'] == distributor.value && jsondata[i]['개봉일'] < year.value) {
             if (i >= 271) film_score = 1;
@@ -103,6 +117,8 @@ document.getElementsByTagName('form')[0].onsubmit = function () {
         }
         else film_score = 0;
     }
+
+// 시즌 점수 코드
     switch (Number(year.value.slice(5, 7))) {
         case 1:
         case 2:
@@ -128,21 +144,23 @@ document.getElementsByTagName('form')[0].onsubmit = function () {
         default:
             break;
     }
+
+// 연도 코드 ( 전국 관객 값을 나눴는데 없는 연도가 생김 2007년 이전값은 결측치 처리됨) # 분류 모델 용
     switch (Number(year.value.slice(0, 4))) {
-        case 2014:
-            year2 = 7;
+        case 2007:
+            year2 = 0;
             break;
-        case 2019:
-            year2 = 12;
-            break;
-        case 2017:
-            year2 = 10;
+        case 2008:
+            year2 = 1;
             break;
         case 2009:
             year2 = 2;
             break;
-        case 2015:
-            year2 = 8;
+        case 2010:
+            year2 = 3;
+            break;
+        case 2011:
+            year2 = 4;
             break;
         case 2012:
             year2 = 5;
@@ -150,66 +168,73 @@ document.getElementsByTagName('form')[0].onsubmit = function () {
         case 2013:
             year2 = 6;
             break;
-        case 2022:
-            year2 = 15;
+        case 2014:
+            year2 = 7;
             break;
-        case 2018:
-            year2 = 11;
+        case 2015:
+            year2 = 8;
             break;
         case 2016:
             year2 = 9;
             break;
-        case 2008:
-            year2 = 1;
+        case 2017:
+            year2 = 10;
             break;
-        case 2011:
-            year2 = 4;
+        case 2018:
+            year2 = 11;
             break;
-        case 2021:
-            year2 = 14;
-            break;
-        case 2010:
-            year2 = 3;
+        case 2019:
+            year2 = 12;
             break;
         case 2020:
             year2 = 13;
             break;
-        case 2007:
-            year2 = 0;
-            break;
+        case 2021:
+            year2 = 14;
+            break;        
+        case 2022:
+            year2 = 15;
+            break;       
         case 2023:
             year2 = 16;
             break;
-
     }
+// tensor2d => tensorflow 값으로 만들어줌
     inputData1 = tf.tensor2d([[Number(genre.value), Number(film_rating.value), dir_score, Number(total), film_score, actors_score, season, screen_scaled, co]]);
-    outputData1 = model1.predict(inputData1);
-    output1 = outputData1.dataSync();
+    outputData1 = model1.predict(inputData1);   // 그 값을 predict (예측)
+    output1 = outputData1.dataSync();           // dataSync 를 불러와서 output1에 저장
 
+// 분류 모델 생성 코드 (output2) 분류 모델만 연도 사용했음 (year2)
     inputData2 = tf.tensor2d([[Number(genre.value), Number(film_rating.value), dir_score, Number(total), film_score, actors_score, season, screen_scaled, year2, co]]);
     outputData2 = model2.predict(inputData2);
     output2 = outputData2.dataSync();
-    return false;
+    return false;       // summit 끝나고 reset 되기 전에 log를 보고 싶어서
 }
+
+// 회귀 모델 버튼 클릭시 동작 코드
 document.getElementById("reg_btn").onclick = () => {
 
+// result 라는 변수가 있으면 삭제, 없으면 생성하는 코드
     if (document.getElementById('result')) {
         document.getElementById('result').remove(document.getElementById('result'));
     }
 
+// div라는 Element 를 생성 후, result 값을 저장
     const newDivEl = document.createElement('div');
     newDivEl.setAttribute('id', 'result');
     document.body.appendChild(newDivEl);
 
+// 비디오 출력 부분
     const newVideoElement = document.createElement('VIDEO');
     newVideoElement.setAttribute('id', 'myVideo');
     newVideoElement.setAttribute("src", './countdown.mp4');
     newVideoElement.setAttribute("width", "1980"); // 동영상 가로크기
     newVideoElement.setAttribute("height", "1100"); // 동영상 세로크기
-    newVideoElement.setAttribute('autoplay', 'true');
-    document.getElementById('result').appendChild(newVideoElement);
+    newVideoElement.setAttribute('autoplay', 'true');   // 자동 출력 부분
+    document.getElementById('result').appendChild(newVideoElement);     //비디오 생성된것을 html에 붙이기
     newVideoElement.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
+// 비디오 출력후 페이드 아웃 되는 코드
     const video = document.getElementById('myVideo');
     video.addEventListener('ended', videoEnded);
     function videoEnded() {
@@ -221,27 +246,34 @@ document.getElementById("reg_btn").onclick = () => {
             newDivEl.style.backgroundSize = 'cover';
             newDivEl.style.width = '1920px';
             newDivEl.style.height = '955px';
-
             newDivEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
         }, 2000);
-        const resultRegEl = document.createElement('div');
-        const resultRegTotalEl = document.createElement('div');
-        const resultTxtEl = document.createElement('div');
-        const resultTxt2El = document.createElement('div');
+
+// 영화관 이미지 뜨면서 결과값 나오는 부분        
+        const resultRegEl = document.createElement('div');          // div 값생성, ( 영화명 part )
+        const resultRegTotalEl = document.createElement('div');     // 회귀모델 결과 값 part
+        const resultTxtEl = document.createElement('div');          // '이 영화의 관객수는' part 
+        const resultTxt2El = document.createElement('div');         // '명으로 예상됩니다' part
+
+// 영화명이 숨겨져 있다가 페이드인 되는 효과를 적용한 코드
         document.getElementById('result').appendChild(resultRegEl);
         resultRegEl.style.visibility = 'hidden';
         setTimeout(() => {
             resultRegEl.style.visibility = 'visible ';
             resultRegEl.classList.add('fade-in-box');
         }, 3000);
+
+// 영화명에 대한 위치 및 폰트 설정 부분
         resultRegEl.style.position = 'relative';
         resultRegEl.style.top = '22%';
         resultRegEl.style.fontSize = '100px';
         resultRegEl.style.marginBottom = '0';
         resultRegEl.style.fontFamily = "'SBAggroB', sans-serif";
         resultRegEl.style.textAlign = 'center';
-        resultRegEl.textContent = movie_name.value;
+        resultRegEl.textContent = movie_name.value; // 여기서 영화명을 집어넣음
 
+
+// div 태그 안에 resultTxt1El 값을 넣는 코드
         document.getElementById('result').appendChild(resultTxtEl);
         resultTxtEl.style.position = 'relative';
         resultTxtEl.style.top = '24%';
@@ -251,6 +283,7 @@ document.getElementById("reg_btn").onclick = () => {
         resultTxtEl.style.textAlign = 'center';
         resultTxtEl.textContent = '이 영화의 관객수는';
 
+// resultRegTotalEl 부분 ( 회귀모델의 값을 자동 증가 효과를 추가하여 보여주는 부분)
         document.getElementById('result').appendChild(resultRegTotalEl);
         resultRegTotalEl.style.visibility = 'hidden';
         setTimeout(() => {
@@ -263,6 +296,8 @@ document.getElementById("reg_btn").onclick = () => {
         resultRegTotalEl.style.fontSize = '100px';
         resultRegTotalEl.style.fontFamily = "'SBAggroB', sans-serif";
         resultRegTotalEl.style.textAlign = 'center';
+        
+// 숫자 변화하는 효과 코드        
         const startNumber = 0;
         const endNumber = Math.round(output1[0] * 1000);
         const intervalTime = 10; // 밀리초 단위
@@ -279,6 +314,7 @@ document.getElementById("reg_btn").onclick = () => {
             }
         }, intervalTime);
 
+// div 태그 안에 resultTxt2El 값을 넣는 코드
         document.getElementById('result').appendChild(resultTxt2El);
         resultTxt2El.style.position = 'relative';
         resultTxt2El.style.top = '18.5%';
@@ -292,10 +328,9 @@ document.getElementById("reg_btn").onclick = () => {
     }
 }
 
+
+// 분류 모델 버튼 클릭시 동작 코드
 document.getElementById("cls_btn").onclick = () => {
-    if (document.getElementById('result')) {
-        document.getElementById('result').remove(document.getElementById('result'));
-    }
     if (document.getElementById('result')) {
         document.getElementById('result').remove(document.getElementById('result'));
     }
@@ -327,6 +362,7 @@ document.getElementById("cls_btn").onclick = () => {
 
             newDivEl.scrollIntoView({ behavior: 'smooth', block: 'end' });
 
+// donut-container 생성 부분
             const newDonut1El = document.createElement('div');
             newDonut1El.classList.add('donut-container');
             newDonut1El.setAttribute('id', 'donut-container');
@@ -416,6 +452,7 @@ document.getElementById("cls_btn").onclick = () => {
 
 }
 
+// 결과 버튼 클릭시 동작 코드
 document.getElementById("all_btn").onclick = () => {
     if (document.getElementById('result')) {
         document.getElementById('result').remove(document.getElementById('result'));
